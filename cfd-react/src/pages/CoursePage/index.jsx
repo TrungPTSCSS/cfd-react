@@ -1,6 +1,6 @@
 import { ListCourse } from "../../components";
 
-export function CoursePage() {
+export default function CoursePage() {
     var listOnline = [
         {
             name: 'Front-end căn bản',

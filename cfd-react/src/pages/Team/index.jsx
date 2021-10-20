@@ -1,6 +1,6 @@
 import { Member } from "./components/Member"
 
-export function Team() {
+export default function Team() {
     var listMentor = [
         {
             name: 'Trần Nghĩa',
@@ -75,3 +75,5 @@ export function Team() {
         </main>
     )
 }
+
+

@@ -1,4 +1,4 @@
-export function Payment() {
+export default function Payment() {
     return (
         <main className="paypage" id="main">
             <div className="container">

@@ -1,12 +1,13 @@
 export function Course(props) {
+    let badgeClass = props.status == "Đã kết thúc" ? 'b1' : props.status === "Đang diễn ra" ? 'b2' : 'b3'
     return (
         <div className="col-md-4 course">
             <div className="wrap">
                 <a className="cover" href="#">
                     <img src="img/img1.png" alt="" />
-                    {props.status === "Đã kết thúc" && <span className="badge b1">{props.status}</span>}
-                    {props.status === "Đang diễn ra" && <span className="badge b2">{props.status}</span>}
-                    {props.status === "Sắp khai giảng" && <span className="badge b3">{props.status}</span>}
+                    <span className={`badge ${badgeClass}`}>{props.status}</span>
+                    {/* {props.status === "Đang diễn ra" && <span className="badge b2">{props.status}</span>} */}
+                    {/* {props.status === "Sắp khai giảng" && <span className="badge b3">{props.status}</span>} */}
                     <div className="hover">
                         <div className="top">
                             <div className="user">

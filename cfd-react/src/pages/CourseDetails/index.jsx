@@ -1,6 +1,6 @@
 import { ListCourse } from "../../components/ListCourse"
 
-export function CourseDetails() {
+export default function CourseDetails() {
     var list = [
         {
             name: 'Front-end căn bản',

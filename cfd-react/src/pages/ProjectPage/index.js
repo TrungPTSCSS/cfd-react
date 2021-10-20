@@ -1,6 +1,6 @@
 import { Project } from "./components/Project"
 
-export function ProjectPage() {
+export default function ProjectPage() {
     var listProject = [
         {
             name: 'Furnitown',

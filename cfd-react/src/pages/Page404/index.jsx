@@ -1,4 +1,4 @@
-export function Page404() {
+export default function Page404() {
     return (
         <main className="notfound" id="main">
             <div className="container">

@@ -1,0 +1,60 @@
+.errorInput {
+  color: red;
+  font-weight: 700;
+  position: absolute !important;
+}
+.nav ul li.active {
+  background-color: unset;
+}
+.nav ul li a.active {
+  color: #fff;
+  background: #00afac;
+}
+.text-error {
+  width: 72%;
+  position: 'relative'
+}
+.text-error input {
+  width: 100% !important;
+}
+.text-error .error {
+  border: 1px solid #e55d5d !important;
+  width: 100%;
+}
+.text-error p {
+  color: #e55d5d;
+  width: 100% !important;
+}
+.message p {
+  margin: 5px 10px;
+  font-size: 30px;
+  line-height: 30px;
+
+  color: #fff;
+}
+.message .btn {
+  color: black;
+  height: 40px;
+  margin: 5px 10px;
+}
+.message {
+  background: #00afab;
+  position: absolute;
+  left: 50%;
+  z-index: 100000;
+}
+.message .show {
+  transition-duration: 0.3s;
+  left: 50%;
+}
+.message .hide {
+  transition-duration: 0.3s;
+  left: 100%;
+}
+.login-error {
+  border: 1px solid #e55d5d !important;
+  margin-bottom: 0;
+}
+.formInput{
+    margin-bottom: 35px !important;
+}

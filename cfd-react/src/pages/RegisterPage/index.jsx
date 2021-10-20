@@ -1,4 +1,45 @@
-export function Register() {
+import { useState } from "react"
+export default function Register() {
+    const [form, setForm] = useState({})
+    const [error, setError] = useState({})
+
+    const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
+    const regexUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+
+
+
+    function handleChange(ev) {
+        let name = ev.currentTarget.name
+        let value = ev.currentTarget.value
+        setForm({ ...form, [name]: value })
+    }
+    function submit() {
+        let errorObject = {}
+        if (!form.name) {
+            errorObject.name = 'Vui lòng nhập tên'
+        }
+        if (!form.phone) {
+            errorObject.phone = 'Vui lòng nhập số điện thoại'
+        } else if (!regexPhone.test(form.phone)) {
+            errorObject.phone = 'Vui lòng nhập đúng định dạng điện thoại'
+        }
+        if (!form.email) {
+            errorObject.email = 'Vui lòng nhập email'
+        } else if (!regexEmail.test(form.email)) {
+            errorObject.email = 'Vui lòng nhập đúng định dạng email'
+        }
+        if (!form.url) {
+            errorObject.url = 'Vui lòng nhập url'
+        } else if (!regexUrl.test(form.url)) {
+            errorObject.url = 'Vui lòng nhập đúng định dạng url'
+        }
+
+        if (Object.keys(errorObject).length === 0) {
+            alert('Success')
+        }
+        setError(errorObject);
+    }
     return (
         <main className="register-course" id="main">
             <section>
@@ -14,19 +55,39 @@ export function Register() {
                         <div className="form">
                             <label>
                                 <p>Họ và tên<span>*</span></p>
-                                <input type="text" placeholder="Họ và tên bạn" />
+                                <div className="text-error">
+                                    <input className={error.name && 'login-error'} value={form.name} name="name" onChange={handleChange} type="text" placeholder="Họ và tên bạn" />
+                                    {
+                                        error.name && <p className="errorInput">{error.name}</p>
+                                    }
+                                </div>
                             </label>
                             <label>
                                 <p>Số điện thoại<span>*</span></p>
-                                <input type="text" placeholder="Số điện thoại" />
+                                <div className="text-error">
+                                    <input className={error.phone && 'login-error'} value={form.phone} name="phone" onChange={handleChange} type="text" placeholder="Số điện thoại" />
+                                    {
+                                        error.phone && <p className="errorInput">{error.phone}</p>
+                                    }
+                                </div>
                             </label>
                             <label>
                                 <p>Email<span>*</span></p>
-                                <input type="text" placeholder="Email của bạn" />
+                                <div className="text-error">
+                                    <input className={error.email && 'login-error'} value={form.email} name="email" onChange={handleChange} type="text" placeholder="Email của bạn" />
+                                    {
+                                        error.email && <p className="errorInput">{error.email}</p>
+                                    }
+                                </div>
                             </label>
                             <label>
                                 <p>URL Facebook<span>*</span></p>
-                                <input type="text" placeholder="https://facebook.com" />
+                                <div className="text-error">
+                                    <input className={error.url && 'login-error'} value={form.url} name="url" onChange={handleChange} type="text" placeholder="https://facebook.com" />
+                                    {
+                                        error.url && <p className="errorInput">{error.url}</p>
+                                    }
+                                </div>
                             </label>
                             <label className="disable">
                                 <p>Sử dụng COIN</p>
@@ -52,7 +113,7 @@ export function Register() {
                                 <p>Ý kiến cá nhân</p>
                                 <input type="text" placeholder="Mong muốn cá nhân và lịch bạn có thể học." />
                             </label>
-                            <div className="btn main rect">đăng ký</div>
+                            <div className="btn main rect" onClick={submit}>đăng ký</div>
                         </div>
                     </div>
                 </div>

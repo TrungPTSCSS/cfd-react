@@ -1,7 +1,7 @@
 import { ListCourse } from "./components/ListCourse";
 import { Testimonital } from "./components/Testimonital";
 
-export function Home() {
+export default function Home() {
     var courseOnline = [
         {
             name: 'Front-end căn bản',
