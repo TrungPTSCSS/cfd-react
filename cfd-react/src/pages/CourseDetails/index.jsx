@@ -1,8 +1,11 @@
 import { ListCourse } from "../../components/ListCourse"
-
-export default function CourseDetails() {
+import { useLocation } from "react-router-dom";
+export default function CourseDetails(props) {
+    const course = props.location.state;
+    console.log(course);
     var list = [
         {
+            tagName: 'Fe-can-ban',
             name: 'Front-end căn bản',
             people: 100,
             like: 100,
@@ -10,6 +13,7 @@ export default function CourseDetails() {
             mentor: "Trần Nghĩa"
         },
         {
+            tagName: 'Fe-Reactjs',
             name: 'React JS',
             people: 100,
             like: 98,
@@ -17,6 +21,7 @@ export default function CourseDetails() {
             mentor: "Vương Đặng"
         },
         {
+            tagName: 'FE-Animation',
             name: "Animation",
             people: 100,
             like: 500,
@@ -29,8 +34,7 @@ export default function CourseDetails() {
             <section className="banner style2" style={{ background: '#cde6fb' }}>
                 <div className="container">
                     <div className="info">
-                        <h1>Thực Chiến
-                            front-end căn bản</h1>
+                        <h1>{course?.name}</h1>
                         <div className="row">
                             <div className="date"><strong>Khai giảng:</strong> 12/10/2020</div>
                             <div className="time"><strong>Thời lượng:</strong> 18 buổi</div>
@@ -149,7 +153,7 @@ export default function CourseDetails() {
                                 <img src="img/avatar-lg.png" alt="" />
                             </div>
                             <div className="info">
-                                <div className="name">TRẦN NGHĨA</div>
+                                <div className="name">{course?.mentor}</div>
                                 <div className="title">Founder CFD &amp; Creative Front-End Developer</div>
                                 <p className="intro">
                                     My education, career, and even personal life have been molded by one simple principle;

@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import { ListCourse } from "./components/ListCourse";
 import { Testimonital } from "./components/Testimonital";
 
 export default function Home() {
     var courseOnline = [
         {
+            tagName:'Fe-can-ban',
             name: 'Front-end căn bản',
             people: 100,
             like: 100,
@@ -11,6 +13,7 @@ export default function Home() {
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'Fe-Reactjs',
             name: 'React JS',
             people: 100,
             like: 98,
@@ -18,6 +21,7 @@ export default function Home() {
             mentor: "Vương Đặng"
         },
         {
+            tagName:'Fe-animation',
             name: "Animation",
             people: 100,
             like: 500,
@@ -25,18 +29,21 @@ export default function Home() {
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'Fe-can-ban',
             name: "Scss, Grunt JS và Boostrap 4",
             people: 100,
             like: 100,
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'UX-UI',
             name: "UX/UI Design",
             people: 100,
             like: 100,
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'Fe-responsive',
             name: "Web Responsive",
             people: 100,
             like: 100,
@@ -45,18 +52,21 @@ export default function Home() {
     ]
     var courseOffline = [
         {
+            tagName:'Fe-can-ban',
             name: "Front-end căn bản",
             people: 100,
             like: 100,
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'Fe-nang-cao',
             name: "Front-end nâng cao",
             people: 100,
             like: 100,
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'Fe-laravel',
             name: "Laravel framework",
             people: 100,
             like: 100,
@@ -70,7 +80,7 @@ export default function Home() {
                     <div className="content">
                         <h2 className="title">Thực Chiến</h2>
                         <h2 className="title">Tạo ra sản phẩm có giá trị</h2>
-                        <div className="btn main round">KHÓA HỌC</div>
+                        <Link to="/course-page" className="btn main round">KHÓA HỌC</Link>
                     </div>
                 </div>
                 <div className="jarallax-img">
@@ -165,7 +175,7 @@ export default function Home() {
             <section className="section-action">
                 <div className="container">
                     <h3>Bạn đã sẵn sàng trở thành chiến binh tiếp theo của Team CFD chưa?</h3>
-                    <div className="btn main round bg-white">Đăng ký</div>
+                    <Link to="/register" className="btn main round bg-white">Đăng ký</Link>
                 </div>
             </section>
         </main>

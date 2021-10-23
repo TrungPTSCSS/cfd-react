@@ -1,4 +1,8 @@
+import { NavLink } from "react-router-dom"
 export function Navbar() {
+    const showMenu = () => {
+        document.querySelector('body').classList.toggle('menu-is-show');
+    }
     return (
         <nav className="nav">
             <ul>
@@ -6,20 +10,20 @@ export function Navbar() {
                     <a href="#">Đăng nhập</a>
                     <a href="#">Đăng ký</a>
                 </li>
-                <li className="active">
-                    <a href="#">Trang chủ</a>
+                <li onClick={showMenu}>
+                    <NavLink to="/" exact>Trang chủ</NavLink>
                 </li>
-                <li>
-                    <a href="#">CFD Team</a>
+                <li onClick={showMenu}>
+                    <NavLink to="/team" exact>CFD Team</NavLink>
                 </li>
-                <li>
-                    <a href="#">Khóa Học</a>
+                <li onClick={showMenu}>
+                    <NavLink to="/course-page">Khóa Học</NavLink>
                 </li>
-                <li>
-                    <a href="#">Dự Án</a>
+                <li onClick={showMenu}>
+                    <NavLink to="/project-page">Dự Án</NavLink>
                 </li>
-                <li>
-                    <a href="#">Liên hệ</a>
+                <li onClick={showMenu}>
+                    <NavLink to="/cooperate">Liên hệ</NavLink>
                 </li>
             </ul>
         </nav>

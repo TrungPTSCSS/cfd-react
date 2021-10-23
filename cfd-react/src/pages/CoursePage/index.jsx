@@ -1,8 +1,10 @@
 import { ListCourse } from "../../components";
 
 export default function CoursePage() {
+    
     var listOnline = [
         {
+            tagName:'Front-end',
             name: 'Front-end căn bản',
             people: 100,
             like: 100,
@@ -10,6 +12,7 @@ export default function CoursePage() {
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'React',
             name: 'React JS',
             people: 100,
             like: 98,
@@ -17,6 +20,7 @@ export default function CoursePage() {
             mentor: "Vương Đặng"
         },
         {
+            tagName:'Animation',
             name: "Animation",
             people: 100,
             like: 500,
@@ -24,6 +28,7 @@ export default function CoursePage() {
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'Reactjs',
             name: 'React JS',
             people: 100,
             like: 98,
@@ -31,6 +36,7 @@ export default function CoursePage() {
             mentor: "Vương Đặng"
         },
         {
+            tagName:'Animation1',
             name: "Animation",
             people: 100,
             like: 500,
@@ -40,6 +46,7 @@ export default function CoursePage() {
     ]
     var listOffline = [
         {
+            tagName:'FE-can-ban',
             name: 'Front-end căn bản',
             people: 100,
             like: 100,
@@ -47,6 +54,7 @@ export default function CoursePage() {
             mentor: "Trần Nghĩa"
         },
         {
+            tagName:'FE-Reactjs',
             name: 'React JS',
             people: 100,
             like: 98,
@@ -54,6 +62,7 @@ export default function CoursePage() {
             mentor: "Vương Đặng"
         },
         {
+            tagName:'FE-animation',
             name: "Animation",
             people: 100,
             like: 500,
@@ -73,7 +82,6 @@ export default function CoursePage() {
                     </p>
                     <ListCourse title="ONLINE" sub="KHÓA HỌC" listCourse={listOnline} />
                     <ListCourse title="OFFLINE" sub="KHÓA HỌC" listCourse={listOffline} />
-                    {/* <div className="text-deco">C</div> */}
                 </div>
             </section>
         </main>

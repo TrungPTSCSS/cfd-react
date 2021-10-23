@@ -1,20 +1,26 @@
 import { useState } from "react"
-export default function Register() {
+import { Prompt } from "react-router-dom";
+
+export default function Register(props) {
     const [form, setForm] = useState({})
     const [error, setError] = useState({})
+    const [submitForm, setSubmitForm] = useState(true);
 
     const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
     const regexUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
 
-
+    const course = props.location.state;
+    console.log(course);
 
     function handleChange(ev) {
         let name = ev.currentTarget.name
         let value = ev.currentTarget.value
         setForm({ ...form, [name]: value })
+        setSubmitForm(false)
+
     }
-    function submit() {
+    function submit(event) {
         let errorObject = {}
         if (!form.name) {
             errorObject.name = 'Vui lòng nhập tên'
@@ -37,6 +43,8 @@ export default function Register() {
 
         if (Object.keys(errorObject).length === 0) {
             alert('Success')
+            event.preventDefault();
+            setSubmitForm(true);
         }
         setError(errorObject);
     }
@@ -46,13 +54,17 @@ export default function Register() {
                 <div className="container">
                     <div className="wrap container">
                         <div className="main-sub-title">ĐĂNG KÝ</div>
-                        <h1 className="main-title">Thực chiến front-end căn bản </h1>
+                        {!course?.name && <h1 className="main-title">Khóa học ở CFD</h1>}
+                        <h1 className="main-title">{course?.name}</h1>
                         <div className="main-info">
                             <div className="date"><strong>Khai giảng:</strong> 15/11/2020</div>
                             <div className="time"><strong>Thời lượng:</strong> 18 buổi</div>
                             <div className="time"><strong>Học phí:</strong> 6.000.000 VND</div>
                         </div>
                         <div className="form">
+                            <Prompt
+                                when={!submitForm}
+                                message={'Dữ liệu của bạn chưa được lưu bạn có chắc muốn thoát?'} />
                             <label>
                                 <p>Họ và tên<span>*</span></p>
                                 <div className="text-error">

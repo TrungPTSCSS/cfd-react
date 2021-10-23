@@ -10,7 +10,7 @@ export function ListCourse({ sub, title, listCourse }) {
                 </div>
                 <div className="list row">
                     {listCourse.map(function (o, i) {
-                        return <Course key={i} people={o.people} like={o.like} name={o.name} status={o.status} mentor={o.mentor} />
+                        return <Course key={i} {...o} />
                     })}
                 </div>
             </div>

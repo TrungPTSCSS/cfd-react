@@ -13,12 +13,12 @@ export function ListCourse(props) {
                 <div className="list row">
                     {props.type === "online" &&
                         props.listCourse.map(function (o, i) {
-                            return <Course key={i} people={o.people} like={o.like} name={o.name} status={o.status} mentor={o.mentor} />
+                            return <Course key={i} {...o} />
                         })
                     }
                     {props.type === "offline" &&
                         props.listCourse.map(function (o, i) {
-                            return <Course key={i} people={o.people} like={o.like} name={o.name} mentor={o.mentor} />
+                            return <Course key={i} {...o} />
                         })
                     }
                 </div>

@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
+
 export function Header() {
+    const showMenu = () => {
+        document.querySelector('body').classList.toggle('menu-is-show');
+    }
     return (
         <header id="header">
             <div className="wrap">
-                <div className="menu-hambeger">
+                <div className="menu-hambeger" onClick={showMenu}>
                     <div className="button">
                         <span />
                         <span />
@@ -20,16 +25,16 @@ export function Header() {
                             <a href="#" className="info">
                                 <div className="name">Trần Lê Trọng Nghĩa</div>
                                 <div className="avatar">
-                                    <img src="img/avt.png" alt="" />
+                                    <img src="/img/avt.png" alt="" />
                                 </div>
                             </a>
                         </div>
                         <div className="hamberger">
                         </div>
                         <div className="sub">
-                            <a href="#">Khóa học của tôi</a>
-                            <a href="#">Thông tin tài khoản</a>
-                            <a href="#">Đăng xuất</a>
+                            <Link to="/profile/course">Khóa học của tôi</Link>
+                            <Link to="/profile">Thông tin tài khoản</Link>
+                            <Link to="/">Đăng xuất</Link>
                         </div>
                     </div>
                     {/* <div class="not-login bg-none">

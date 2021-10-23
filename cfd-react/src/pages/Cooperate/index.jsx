@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { Prompt } from "react-router-dom";
 export default function Cooperate() {
     const [form, setForm] = useState({})
     const [error, setError] = useState({})
+    const [submitForm, setSubmitForm] = useState(true);
     const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
     const regexUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
@@ -9,8 +11,9 @@ export default function Cooperate() {
         let name = ev.currentTarget.name
         let value = ev.currentTarget.value
         setForm({ ...form, [name]: value })
+        setSubmitForm(false)
     }
-    const submit = () => {
+    const submit = (event) => {
         let errorObject = {}
         if (!form.name) {
             errorObject.name = 'Vui lòng nhập họ tên'
@@ -36,8 +39,11 @@ export default function Cooperate() {
         } else if (!regexUrl.test(form.url)) {
             errorObject.url = 'Vui lòng nhập đúng định dạng url'
         }
-        if(Object.keys(errorObject).length === 0){
+        if (Object.keys(errorObject).length === 0) {
             alert('Thành công')
+            event.preventDefault();
+            // event.target.reset();
+            setSubmitForm(true);
         }
         setError(errorObject)
     }
@@ -52,6 +58,9 @@ export default function Cooperate() {
                     việc hợp tác với các đối tác tuyển dụng và công ty trong và ngoài nước.
                 </p>
                 <div className="form">
+                    <Prompt
+                        when={!submitForm}
+                        message={'Dữ liệu của bạn chưa được lưu bạn có chắc muốn thoát?'} />
                     <label>
                         <p>Họ và tên<span>*</span></p>
                         <div className="text-error">
