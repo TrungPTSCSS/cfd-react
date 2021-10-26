@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-
+import { useAuth } from "../../hook/useAuth";
 export function Header() {
+    const { user } = useAuth()
     const showMenu = () => {
         document.querySelector('body').classList.toggle('menu-is-show');
     }
@@ -23,7 +24,7 @@ export function Header() {
                     <div className="have-login">
                         <div className="account">
                             <a href="#" className="info">
-                                <div className="name">Trần Lê Trọng Nghĩa</div>
+                                <div className="name">{user.name}</div>
                                 <div className="avatar">
                                     <img src="/img/avt.png" alt="" />
                                 </div>

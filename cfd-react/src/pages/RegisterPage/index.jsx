@@ -1,52 +1,22 @@
 import { useState } from "react"
 import { Prompt } from "react-router-dom";
+import { useForm } from "../../hook/useForm";
+import { useLocalStorage } from "../../hook/useLocalStorage";
 
 export default function Register(props) {
-    const [form, setForm] = useState({})
-    const [error, setError] = useState({})
-    const [submitForm, setSubmitForm] = useState(true);
-
-    const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
-    const regexUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
-
     const course = props.location.state;
     console.log(course);
+    let [InfoRegister, setRegister] = useLocalStorage('InfoRegister')
 
-    function handleChange(ev) {
-        let name = ev.currentTarget.name
-        let value = ev.currentTarget.value
-        setForm({ ...form, [name]: value })
-        setSubmitForm(false)
+    const [submitForm, setSubmitForm] = useState(false);
+    let { register, form, handleSubmit, error } = useForm(InfoRegister || {})
 
-    }
-    function submit(event) {
-        let errorObject = {}
-        if (!form.name) {
-            errorObject.name = 'Vui lòng nhập tên'
-        }
-        if (!form.phone) {
-            errorObject.phone = 'Vui lòng nhập số điện thoại'
-        } else if (!regexPhone.test(form.phone)) {
-            errorObject.phone = 'Vui lòng nhập đúng định dạng điện thoại'
-        }
-        if (!form.email) {
-            errorObject.email = 'Vui lòng nhập email'
-        } else if (!regexEmail.test(form.email)) {
-            errorObject.email = 'Vui lòng nhập đúng định dạng email'
-        }
-        if (!form.url) {
-            errorObject.url = 'Vui lòng nhập url'
-        } else if (!regexUrl.test(form.url)) {
-            errorObject.url = 'Vui lòng nhập đúng định dạng url'
-        }
-
-        if (Object.keys(errorObject).length === 0) {
-            alert('Success')
-            event.preventDefault();
-            setSubmitForm(true);
-        }
-        setError(errorObject);
+    const submit = (form) => {
+        console.log('====================================');
+        console.log(form);
+        setRegister(form);
+        setSubmitForm(true);
+        console.log('====================================');
     }
     return (
         <main className="register-course" id="main">
@@ -61,23 +31,23 @@ export default function Register(props) {
                             <div className="time"><strong>Thời lượng:</strong> 18 buổi</div>
                             <div className="time"><strong>Học phí:</strong> 6.000.000 VND</div>
                         </div>
-                        <div className="form">
+                        <form className="form" onSubmit={handleSubmit(submit)}>
                             <Prompt
                                 when={!submitForm}
                                 message={'Dữ liệu của bạn chưa được lưu bạn có chắc muốn thoát?'} />
                             <label>
                                 <p>Họ và tên<span>*</span></p>
                                 <div className="text-error">
-                                    <input className={error.name && 'login-error'} value={form.name} name="name" onChange={handleChange} type="text" placeholder="Họ và tên bạn" />
+                                    <input className={error.fullName && 'login-error'} {...register('fullName', { required: true })} type="text" placeholder="Họ và tên bạn" />
                                     {
-                                        error.name && <p className="errorInput">{error.name}</p>
+                                        error.fullName && <p className="errorInput">{error.fullName}</p>
                                     }
                                 </div>
                             </label>
                             <label>
                                 <p>Số điện thoại<span>*</span></p>
                                 <div className="text-error">
-                                    <input className={error.phone && 'login-error'} value={form.phone} name="phone" onChange={handleChange} type="text" placeholder="Số điện thoại" />
+                                    <input className={error.phone && 'login-error'}  {...register('phone', { required: true, parttern: 'phone' })} type="text" placeholder="Số điện thoại" />
                                     {
                                         error.phone && <p className="errorInput">{error.phone}</p>
                                     }
@@ -86,7 +56,7 @@ export default function Register(props) {
                             <label>
                                 <p>Email<span>*</span></p>
                                 <div className="text-error">
-                                    <input className={error.email && 'login-error'} value={form.email} name="email" onChange={handleChange} type="text" placeholder="Email của bạn" />
+                                    <input className={error.email && 'login-error'} {...register('email', { required: true, parttern: 'email' })} type="text" placeholder="Email của bạn" />
                                     {
                                         error.email && <p className="errorInput">{error.email}</p>
                                     }
@@ -95,9 +65,9 @@ export default function Register(props) {
                             <label>
                                 <p>URL Facebook<span>*</span></p>
                                 <div className="text-error">
-                                    <input className={error.url && 'login-error'} value={form.url} name="url" onChange={handleChange} type="text" placeholder="https://facebook.com" />
+                                    <input className={error.urlFb && 'login-error'} {...register('urlFb', { required: true, parttern: 'url' })} type="text" placeholder="Facebook url" />
                                     {
-                                        error.url && <p className="errorInput">{error.url}</p>
+                                        error.urlFb && <p className="errorInput">{error.urlFb}</p>
                                     }
                                 </div>
                             </label>
@@ -125,8 +95,8 @@ export default function Register(props) {
                                 <p>Ý kiến cá nhân</p>
                                 <input type="text" placeholder="Mong muốn cá nhân và lịch bạn có thể học." />
                             </label>
-                            <div className="btn main rect" onClick={submit}>đăng ký</div>
-                        </div>
+                            <button className="btn main rect" type='submit'>đăng ký</button>
+                        </form>
                     </div>
                 </div>
             </section>

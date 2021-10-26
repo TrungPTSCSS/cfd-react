@@ -2,8 +2,10 @@ import { NavLink, Switch, Route } from "react-router-dom";
 import { Coin, Course, Information, Payment, Project } from "./components";
 
 import { useRouteMatch } from "react-router-dom";
+import { useAuth } from "../../hook/useAuth";
 export default function Profile() {
     const { url } = useRouteMatch()
+    const { user } = useAuth()
     return (
         <main className="profile" id="main">
             <section>
@@ -13,7 +15,7 @@ export default function Profile() {
                         <img src="/img/avatar-lg.png" alt="" />
                         <div className="camera" />
                     </div>
-                    <div className="name">trần nghĩa</div>
+                    <div className="name">{user.name}</div>
                     <p className="des">Thành viên của team CFD1-OFFLINE</p>
                 </div>
                 <div className="container">

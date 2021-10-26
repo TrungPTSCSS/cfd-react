@@ -14,31 +14,43 @@ import ProjectPage from "./pages/ProjectPage";
 import Register from "./pages/RegisterPage";
 import Team from "./pages/Team";
 import { BrowserRouter } from 'react-router-dom'
-function App() {
+import { createContext } from 'react';
 
+
+export const Context = createContext();
+export default function App() {
+  const user = {
+    name: 'Trungbeo',
+    fullName:'Phạm Thành Trung',
+    email:'trungbeodeptrai@gmail.com',
+    phone:'0344153437',
+    urlFb:'',
+    urlSkype:'',
+    img: 'ádasdsad'
+  }
   return (
     <BrowserRouter>
-
-      <Header />
-      <Navbar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/course-details/:tagname" component={CourseDetails} />
-        <Route path="/faq" component={Faq} />
-        <Route path="/introduce-coin" component={IntroduceCoin} />
-        <Route path="/email" component={Email} />
-        <Route path="/course-page" component={CoursePage} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/project-page" component={ProjectPage} />
-        <Route path="/register" component={Register} />
-        <Route path="/team" component={Team} />
-        <Route path="/payment" component={Payment} />
-        <Route path="/cooperate" component={Cooperate} />
-        <Route component={Page404} />
-      </Switch>
-      <Footer />
+      <Context.Provider value={{ user }}>
+        <Header />
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/course-details/:tagname" component={CourseDetails} />
+          <Route path="/faq" component={Faq} />
+          <Route path="/introduce-coin" component={IntroduceCoin} />
+          <Route path="/email" component={Email} />
+          <Route path="/course-page" component={CoursePage} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/project-page" component={ProjectPage} />
+          <Route path="/register" component={Register} />
+          <Route path="/team" component={Team} />
+          <Route path="/payment" component={Payment} />
+          <Route path="/cooperate" component={Cooperate} />
+          <Route component={Page404} />
+        </Switch>
+        <Footer />
+      </Context.Provider>
     </BrowserRouter>
   );
 }
 
-export default App;

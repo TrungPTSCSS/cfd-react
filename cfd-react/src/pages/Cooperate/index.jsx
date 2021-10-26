@@ -1,51 +1,21 @@
 import { useState } from "react"
 import { Prompt } from "react-router-dom";
+import { useForm } from "../../hook/useForm";
+import { useLocalStorage } from "../../hook/useLocalStorage";
 export default function Cooperate() {
-    const [form, setForm] = useState({})
-    const [error, setError] = useState({})
-    const [submitForm, setSubmitForm] = useState(true);
-    const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
-    const regexUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
-    const handleChange = (ev) => {
-        let name = ev.currentTarget.name
-        let value = ev.currentTarget.value
-        setForm({ ...form, [name]: value })
-        setSubmitForm(false)
-    }
-    const submit = (event) => {
-        let errorObject = {}
-        if (!form.name) {
-            errorObject.name = 'Vui lòng nhập họ tên'
-        }
-        if (!form.title) {
-            errorObject.title = 'Vui lòng nhập tiêu đề'
-        }
-        if (!form.content) {
-            errorObject.content = 'Vui lòng nhập nội dung'
-        }
-        if (!form.phone) {
-            errorObject.phone = 'Vui lòng nhập số điện thoại'
-        } else if (!regexPhone.test(form.phone)) {
-            errorObject.phone = 'Vui lòng nhập đúng định dạng điện thoại'
-        }
-        if (!form.email) {
-            errorObject.email = 'Vui lòng nhập email'
-        } else if (!regexEmail.test(form.email)) {
-            errorObject.email = 'Vui lòng nhập đúng định dạng email'
-        }
-        if (!form.url) {
-            errorObject.url = 'Vui lòng nhập url'
-        } else if (!regexUrl.test(form.url)) {
-            errorObject.url = 'Vui lòng nhập đúng định dạng url'
-        }
-        if (Object.keys(errorObject).length === 0) {
-            alert('Thành công')
-            event.preventDefault();
-            // event.target.reset();
-            setSubmitForm(true);
-        }
-        setError(errorObject)
+    const [submitForm, setSubmitForm] = useState(false);
+    let [Cooperate, setCooperateName] = useLocalStorage('Cooperate')
+
+    let { register, form, handleSubmit, error } = useForm(Cooperate || {})
+
+    console.log(Cooperate);
+    const submit = (form) => {
+        console.log('====================================');
+        console.log(form);
+        console.log('====================================');
+
+        setSubmitForm(true);
+        setCooperateName(form);
     }
 
     return (
@@ -57,23 +27,23 @@ export default function Cooperate() {
                     Đừng ngần ngại liên hệ với <strong>CFD</strong> để cùng nhau tạo ra những sản phẩm giá trị, cũng như
                     việc hợp tác với các đối tác tuyển dụng và công ty trong và ngoài nước.
                 </p>
-                <div className="form">
+                <form className="form" onSubmit={handleSubmit(submit)}>
                     <Prompt
                         when={!submitForm}
                         message={'Dữ liệu của bạn chưa được lưu bạn có chắc muốn thoát?'} />
                     <label>
                         <p>Họ và tên<span>*</span></p>
                         <div className="text-error">
-                            <input onChange={handleChange} className={error.name && "login-error"} type="text" name="name" value={form.name} placeholder="Họ và tên bạn" />
+                            <input className={error.fullName && "login-error"} type="text" {...register('fullName', { required: true })} placeholder="Họ và tên bạn" />
                             {
-                                error.name && <p>{error.name}</p>
+                                error.fullName && <p>{error.fullName}</p>
                             }
                         </div>
                     </label>
                     <label>
                         <p>Số điện thoại</p>
                         <div className="text-error">
-                            <input onChange={handleChange} className={error.phone && "login-error"} name="phone" value={form.phone} type="text" placeholder="Số điện thoại" />
+                            <input className={error.phone && "login-error"} {...register('phone', { required: true, parttern: 'phone' })} type="text" placeholder="Số điện thoại" />
                             {
                                 error.phone && <p>{error.phone}</p>
                             }
@@ -82,7 +52,7 @@ export default function Cooperate() {
                     <label>
                         <p>Email<span>*</span></p>
                         <div className="text-error">
-                            <input onChange={handleChange} className={error.email && "login-error"} name="email" value={form.email} type="text" placeholder="Email của bạn" />
+                            <input className={error.email && "login-error"} {...register('email', { required: true.valueOf, parttern: 'email' })} type="text" placeholder="Email của bạn" />
                             {
                                 error.email && <p>{error.email}</p>
                             }
@@ -91,7 +61,7 @@ export default function Cooperate() {
                     <label>
                         <p>Website</p>
                         <div className="text-error">
-                            <input onChange={handleChange} className={error.url && "login-error"} name="url" value={form.url} type="text" placeholder="Đường dẫn website http://" />
+                            <input className={error.url && "login-error"} {...register('url', { required: true, parttern: 'url' })} type="text" placeholder="Đường dẫn website http://" />
                             {
                                 error.url && <p>{error.url}</p>
                             }
@@ -100,7 +70,7 @@ export default function Cooperate() {
                     <label>
                         <p>Tiêu đề<span>*</span></p>
                         <div className="text-error">
-                            <input onChange={handleChange} className={error.title && "login-error"} name="title" value={form.title} type="text" placeholder="Tiêu đề liên hệ" />
+                            <input className={error.title && "login-error"} {...register('title', { required: true })} type="text" placeholder="Tiêu đề liên hệ" />
                             {
                                 error.title && <p> {error.title}</p>
                             }
@@ -109,14 +79,14 @@ export default function Cooperate() {
                     <label>
                         <p>Nội dung<span>*</span></p>
                         <div className="text-error">
-                            <textarea onChange={handleChange} className={error.content && "login-error"} name="content" value={form.content} cols={51} rows={10} />
+                            <textarea className={error.content && "login-error"} {...register('content', { required: true })} cols={51} rows={10} />
                             {
                                 error.content && <p> {error.content}</p>
                             }
                         </div>
                     </label>
-                    <div className="btn main rect" onClick={submit}>đăng ký</div>
-                </div>
+                    <button className="btn main rect" type="submit">đăng ký</button>
+                </form>
             </section>
             {/* <div class="register-success">
             <div class="contain">

@@ -1,8 +1,10 @@
 import { ListCourse } from "../../components/ListCourse"
-import { useLocation } from "react-router-dom";
 export default function CourseDetails(props) {
     const course = props.location.state;
     console.log(course);
+
+
+    
     var list = [
         {
             tagName: 'Fe-can-ban',
