@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hook/useAuth";
 export function Header() {
-    const { user } = useAuth()
+    const { user, logout, togglePopupLogin } = useAuth()
     const showMenu = () => {
         document.querySelector('body').classList.toggle('menu-is-show');
     }
@@ -21,27 +21,32 @@ export function Header() {
                     <h1>CFD</h1>
                 </a>
                 <div className="right">
-                    <div className="have-login">
-                        <div className="account">
-                            <a href="#" className="info">
-                                <div className="name">{user.name}</div>
-                                <div className="avatar">
-                                    <img src="/img/avt.png" alt="" />
+                    {
+                        user ? (
+                            <div className="have-login">
+                                <div className="account">
+                                    <a href="#" className="info">
+                                        <div className="name">{user.name}</div>
+                                        <div className="avatar">
+                                            <img src={user?.avt} alt="" />
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div className="hamberger">
-                        </div>
-                        <div className="sub">
-                            <Link to="/profile/course">Khóa học của tôi</Link>
-                            <Link to="/profile">Thông tin tài khoản</Link>
-                            <Link to="/">Đăng xuất</Link>
-                        </div>
-                    </div>
-                    {/* <div class="not-login bg-none">
-                    <a href="#" class="btn-register">Đăng nhập</a>
-                    <a href="login.html" class="btn main btn-open-login">Đăng ký</a>
-                </div> */}
+                                <div className="hamberger">
+                                </div>
+                                <div className="sub">
+                                    <Link to="/profile/course">Khóa học của tôi</Link>
+                                    <Link to="/profile">Thông tin tài khoản</Link>
+                                    <Link to="#" onClick={(ev) => { ev.preventDefault(); logout() }}>Đăng xuất</Link>
+                                </div>
+                            </div>
+                        ) : (
+                            <div class="not-login bg-none">
+                                <Link to="#" class="btn-register" onClick={(ev) => { ev.preventDefault(); togglePopupLogin(true); }}>Đăng nhập</Link>
+                                <Link to="/register" class="btn main btn-open-login">Đăng ký</Link>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </header>

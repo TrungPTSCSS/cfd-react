@@ -29,10 +29,16 @@ export function useForm(initValue = {}) {
             if (r.required && !form[i]) {
                 errorObject[i] = 'Gia tri khong duoc bo trong'
             }
+            if (r.min && (typeof form[i] === 'undefined' || form[i].length < r.min)) {
+                errorObject[i] = `Password khong duoc nho hon ${r.min} ky tu`
+            }
+            if (r.max && form[i].length > r.max) {
+                errorObject[i] = `Password khong duoc lon hon ${r.max} ky tu`
+            }
         }
-        if (Object.keys(errorObject).length === 0) {
-            alert('Thành công')
-        }
+        // if (Object.keys(errorObject).length === 0) {
+        //     alert('Thành công')
+        // }
         setError(errorObject)
         return errorObject
     }

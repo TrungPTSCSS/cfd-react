@@ -12,10 +12,10 @@ export default function Profile() {
                 <div className="top-info">
                     <div className="avatar">
                         {/* <span class="text">H</span> */}
-                        <img src="/img/avatar-lg.png" alt="" />
+                        <img src={user?.avt} alt="" />
                         <div className="camera" />
                     </div>
-                    <div className="name">{user.name}</div>
+                    <div className="name">{user?.name}</div>
                     <p className="des">Thành viên của team CFD1-OFFLINE</p>
                 </div>
                 <div className="container">

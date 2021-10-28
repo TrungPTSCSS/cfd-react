@@ -37,7 +37,7 @@ export default function Register(props) {
                                 message={'Dữ liệu của bạn chưa được lưu bạn có chắc muốn thoát?'} />
                             <label>
                                 <p>Họ và tên<span>*</span></p>
-                                <div className="text-error">
+                                <div className="text-error" >
                                     <input className={error.fullName && 'login-error'} {...register('fullName', { required: true })} type="text" placeholder="Họ và tên bạn" />
                                     {
                                         error.fullName && <p className="errorInput">{error.fullName}</p>
@@ -46,7 +46,7 @@ export default function Register(props) {
                             </label>
                             <label>
                                 <p>Số điện thoại<span>*</span></p>
-                                <div className="text-error">
+                                <div className="text-error" >
                                     <input className={error.phone && 'login-error'}  {...register('phone', { required: true, parttern: 'phone' })} type="text" placeholder="Số điện thoại" />
                                     {
                                         error.phone && <p className="errorInput">{error.phone}</p>
@@ -55,7 +55,7 @@ export default function Register(props) {
                             </label>
                             <label>
                                 <p>Email<span>*</span></p>
-                                <div className="text-error">
+                                <div className="text-error" >
                                     <input className={error.email && 'login-error'} {...register('email', { required: true, parttern: 'email' })} type="text" placeholder="Email của bạn" />
                                     {
                                         error.email && <p className="errorInput">{error.email}</p>
@@ -64,7 +64,7 @@ export default function Register(props) {
                             </label>
                             <label>
                                 <p>URL Facebook<span>*</span></p>
-                                <div className="text-error">
+                                <div className="text-error" >
                                     <input className={error.urlFb && 'login-error'} {...register('urlFb', { required: true, parttern: 'url' })} type="text" placeholder="Facebook url" />
                                     {
                                         error.urlFb && <p className="errorInput">{error.urlFb}</p>
