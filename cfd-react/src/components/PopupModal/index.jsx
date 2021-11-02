@@ -7,6 +7,7 @@ export function PopupModal() {
     let { register, handleSubmit, error } = useForm();
     let { login, openLogin, togglePopupLogin } = useAuth();
     const submit = (form) => {
+        console.log(form);
         login(form).then(res => {
             if (res) {
                 setResquestError(res)
@@ -22,9 +23,9 @@ export function PopupModal() {
                 <form onSubmit={handleSubmit(submit)} className="ct_login">
                     <h2 className="title">Đăng nhập</h2>
                     <div className="text-error" style={{ marginBottom: 15,width:'100%' }} >
-                        <input className={error.email && "login-error"} style={{ marginBottom: 0 }} {...register('email', { required: true, parttern: 'email' })} type="text" placeholder="Email / Số điện thoại" />
+                        <input className={error.username && "login-error"} style={{ marginBottom: 0 }} {...register('username', { required: true, parttern: 'email' })} type="text" placeholder="Username / Số điện thoại" />
                         {
-                            error.email && <p> {error.email}</p>
+                            error.username && <p> {error.username}</p>
                         }
                     </div>
                     <div className="text-error" style={{ marginBottom: 15,width:'100%' }}>

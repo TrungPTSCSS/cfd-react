@@ -4,21 +4,30 @@ import { Prompt } from 'react-router-dom';
 import { useAuth } from '../../../hook/useAuth';
 import { useForm } from '../../../hook/useForm';
 import { useLocalStorage } from '../../../hook/useLocalStorage';
+import authService from '../../../services/AuthService';
 
 export function Information() {
     const { user } = useAuth()
     let [infoAccount, setInfoAccount] = useLocalStorage('infoAccount')
+
     let { register, form, handleSubmit, error } = useForm(infoAccount || user)
-    console.log(infoAccount);
+
 
     const [submitForm, setSubmitForm] = useState(false);
 
-    const submit = (form) => {
+    const submit = async (form) => {
+        form.first_name = form.fullName.split(' ').slice(-1).join(' ');
+        form.last_name = form.fullName.split(' ').slice(0, -1).join(' ');
+        
+
         console.log('====================================');
         console.log(form);
         console.log('====================================');
 
+        await authService.update(JSON.stringify(form));
+
         setInfoAccount(form)
+        
         setSubmitForm(true);
     }
 

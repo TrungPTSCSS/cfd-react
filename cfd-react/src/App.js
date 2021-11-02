@@ -33,20 +33,14 @@ export default function App() {
   }
   const login = async (form) => {
     let response = await authService.login(form);
-    let res = await response.json();
-    if (res.data) {
+    if (response.data) {
       await setUser({
-        ...res.data,
-        name: 'Trung',
-        fullName: 'Phạm Thành Trung',
-        phone: '0344153437',
-        urlFb: 'https://www.facebook.com/VuongDangThuyen/videos/1071257306945242/',
-        urlSkype: 'https://www.facebook.com/VuongDangThuyen/videos/1071257306945242/',
-        avt: '/img/img (7).png'
+        ...response.data
       })
-      localStorage.setItem('infoAccount', JSON.stringify(user))
+      localStorage.setItem('infoAccount', JSON.stringify({...response.data,fullName:response.data.last_name + ' ' +response.data.first_name}))
+      localStorage.setItem('token', JSON.stringify(response.data.token))
     } else {
-      return res.error
+      return response.error
     }
   }
   // console.log(user)
@@ -71,7 +65,7 @@ export default function App() {
           <Route path="/course-page" component={CoursePage} />
           <PrivateRoute path="/profile" component={Profile} />
           <Route path="/project-page" component={ProjectPage} />
-          <Route path="/register" component={Register} />
+          <Route path="/register/:tagname" component={Register} />
           <Route path="/team" component={Team} />
           <Route path="/payment" component={Payment} />
           <Route path="/cooperate" component={Cooperate} />

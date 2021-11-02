@@ -2,18 +2,25 @@ import { useState } from "react"
 import { Prompt } from "react-router-dom";
 import { useForm } from "../../hook/useForm";
 import { useLocalStorage } from "../../hook/useLocalStorage";
+import contactService from "../../services/ContactService";
+
 export default function Cooperate() {
     const [submitForm, setSubmitForm] = useState(false);
     let [Cooperate, setCooperateName] = useLocalStorage('Cooperate')
 
     let { register, form, handleSubmit, error } = useForm(Cooperate || {})
-
     console.log(Cooperate);
-    const submit = (form) => {
-        console.log('====================================');
-        console.log(form);
-        console.log('====================================');
-
+    const submit = async (form) => {
+        const data = {
+            name:form.fullName,
+            fb:form.url,
+            phone:form.phone,
+            email:form.email,
+            content:form.content,
+            title:form.title,
+        }
+        let res = await contactService.contact(JSON.stringify(data))
+        
         setSubmitForm(true);
         setCooperateName(form);
     }

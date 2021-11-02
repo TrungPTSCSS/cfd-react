@@ -1,78 +1,29 @@
 import { Link } from "react-router-dom";
+import courseService from "../../services/CourseService";
 import { ListCourse } from "./components/ListCourse";
 import { Testimonital } from "./components/Testimonital";
+import { useEffect, useState } from "react";
+import Loading from "../../components/Loading";
+import Gallery from "./components/Gallery";
 
 export default function Home() {
-    var courseOnline = [
-        {
-            tagName:'Fe-can-ban',
-            name: 'Front-end căn bản',
-            people: 100,
-            like: 100,
-            status: "Đã kết thúc",
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'Fe-Reactjs',
-            name: 'React JS',
-            people: 100,
-            like: 98,
-            status: "Đang diễn ra",
-            mentor: "Vương Đặng"
-        },
-        {
-            tagName:'Fe-animation',
-            name: "Animation",
-            people: 100,
-            like: 500,
-            status: "Sắp khai giảng",
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'Fe-can-ban',
-            name: "Scss, Grunt JS và Boostrap 4",
-            people: 100,
-            like: 100,
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'UX-UI',
-            name: "UX/UI Design",
-            people: 100,
-            like: 100,
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'Fe-responsive',
-            name: "Web Responsive",
-            people: 100,
-            like: 100,
-            mentor: "Trần Nghĩa"
-        }
-    ]
-    var courseOffline = [
-        {
-            tagName:'Fe-can-ban',
-            name: "Front-end căn bản",
-            people: 100,
-            like: 100,
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'Fe-nang-cao',
-            name: "Front-end nâng cao",
-            people: 100,
-            like: 100,
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'Fe-laravel',
-            name: "Laravel framework",
-            people: 100,
-            like: 100,
-            mentor: "Trần Nghĩa"
-        }
-    ]
+    let [state, setState] = useState({
+        data: {},
+        loading: true,
+    })
+
+    useEffect(async () => {
+        let data = await courseService.home();
+        console.log('====================================');
+        console.log(data);
+        console.log('====================================');
+        setState({
+            loading: false,
+            data
+        })
+    }, [])
+    let { loading, data } = state
+    if (loading) return <Loading />
     return (
         <main className="homepage" id="main">
             <div className="banner jarallax">
@@ -90,8 +41,8 @@ export default function Home() {
             </div>
             <ListCourse name="Khoá học Online" decription="The readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it
                     has
-                    a more-or-less normal" type="online" listCourse={courseOnline} />
-            <ListCourse name="Khoá học Offline" type="offline" listCourse={courseOffline} />
+                    a more-or-less normal" type="online" listCourse={data.online} />
+            <ListCourse name="Khoá học Offline" type="offline" listCourse={data.offline} />
             <section className="section-different">
                 <div className="container">
                     <div className="row">
@@ -140,38 +91,10 @@ export default function Home() {
                     <div className="textbox">
                         <h2 className="main-title white">Học viên cảm nhận về CFD</h2>
                     </div>
-                    <Testimonital />
+                    <Testimonital review={data.review} />
                 </div>
             </section>
-            <section className="section-gallery">
-                <div className="textbox">
-                    <h2 className="main-title">Chúng ta là một team</h2>
-                </div>
-                <div className="list">
-                    <img data-flickity-lazyload="img/img_team1.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team2.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team3.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team4.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team3.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team4.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team1.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team2.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team3.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team4.png" alt="" />
-                    <img data-flickity-lazyload="img/img_team3.png" alt="" />
-                    <div className="item carousel-cell">
-                        <img data-flickity-lazyload="img/img_team4.png" alt="" />
-                    </div>
-                </div>
-                <div className="controls">
-                    <div className="btn_ctr prev" />
-                    <span>Trượt qua</span>
-                    <div className="timeline">
-                        <div className="process" />
-                    </div>
-                    <div className="btn_ctr next" />
-                </div>
-            </section>
+            <Gallery gallery = {data.gallery}/>
             <section className="section-action">
                 <div className="container">
                     <h3>Bạn đã sẵn sàng trở thành chiến binh tiếp theo của Team CFD chưa?</h3>

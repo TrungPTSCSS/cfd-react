@@ -1,35 +1,44 @@
-import { useState } from "react"
-import { Prompt } from "react-router-dom";
+import { useState,useEffect } from "react"
+import { Prompt, useParams } from "react-router-dom";
+import Loading from "../../components/Loading";
 import { useForm } from "../../hook/useForm";
 import { useLocalStorage } from "../../hook/useLocalStorage";
+import courseService from "../../services/CourseService";
 
-export default function Register(props) {
-    const course = props.location.state;
-    console.log(course);
+export default function Register() {
+    let { tagname } = useParams();
     let [InfoRegister, setRegister] = useLocalStorage('InfoRegister')
-
     const [submitForm, setSubmitForm] = useState(false);
     let { register, form, handleSubmit, error } = useForm(InfoRegister || {})
-
-    const submit = (form) => {
-        console.log('====================================');
+    let [details, setDetails] = useState()
+    
+    const submit = async (form) => {
         console.log(form);
         setRegister(form);
         setSubmitForm(true);
-        console.log('====================================');
+        let res = await courseService.registerCourse(tagname, JSON.stringify(form))
     }
+    useEffect(
+        () => {
+            async function fetchData() {
+                let response = await courseService.details(tagname);
+                setDetails(response.data);
+            }
+            fetchData();
+        }, [tagname])
+    if(!details) return <Loading/>
     return (
         <main className="register-course" id="main">
             <section>
                 <div className="container">
                     <div className="wrap container">
                         <div className="main-sub-title">ĐĂNG KÝ</div>
-                        {!course?.name && <h1 className="main-title">Khóa học ở CFD</h1>}
-                        <h1 className="main-title">{course?.name}</h1>
+                        {/* {!course?.name && <h1 className="main-title">Khóa học ở CFD</h1>} */}
+                        <h1 className="main-title">{details?.title}</h1>
                         <div className="main-info">
-                            <div className="date"><strong>Khai giảng:</strong> 15/11/2020</div>
+                            <div className="date"><strong>Khai giảng:</strong>{details?.opening_time}</div>
                             <div className="time"><strong>Thời lượng:</strong> 18 buổi</div>
-                            <div className="time"><strong>Học phí:</strong> 6.000.000 VND</div>
+                            <div className="time"><strong>Học phí:</strong>{details?.money} VND</div>
                         </div>
                         <form className="form" onSubmit={handleSubmit(submit)}>
                             <Prompt
@@ -38,9 +47,9 @@ export default function Register(props) {
                             <label>
                                 <p>Họ và tên<span>*</span></p>
                                 <div className="text-error" >
-                                    <input className={error.fullName && 'login-error'} {...register('fullName', { required: true })} type="text" placeholder="Họ và tên bạn" />
+                                    <input className={error.name && 'login-error'} {...register('name', { required: true })} type="text" placeholder="Họ và tên bạn" />
                                     {
-                                        error.fullName && <p className="errorInput">{error.fullName}</p>
+                                        error.name && <p className="errorInput">{error.name}</p>
                                     }
                                 </div>
                             </label>
@@ -65,9 +74,9 @@ export default function Register(props) {
                             <label>
                                 <p>URL Facebook<span>*</span></p>
                                 <div className="text-error" >
-                                    <input className={error.urlFb && 'login-error'} {...register('urlFb', { required: true, parttern: 'url' })} type="text" placeholder="Facebook url" />
+                                    <input className={error.fb && 'login-error'} {...register('fb', { required: true, parttern: 'url' })} type="text" placeholder="Facebook url" />
                                     {
-                                        error.urlFb && <p className="errorInput">{error.urlFb}</p>
+                                        error.fb && <p className="errorInput">{error.fb}</p>
                                     }
                                 </div>
                             </label>

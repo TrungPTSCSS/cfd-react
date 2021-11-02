@@ -5,8 +5,11 @@ const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/
 const regexUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
 export function useForm(initValue = {}) {
     const [form, setForm] = useState(initValue)
+    
     const [error, setError] = useState({})
+
     const rules = {}
+
     const handleChange = (ev) => {
         let name = ev.currentTarget.name
         let value = ev.currentTarget.value
@@ -16,13 +19,13 @@ export function useForm(initValue = {}) {
         let errorObject = {}
         for (let i in rules) {
             let r = rules[i]
-
             if (r.parttern) {
                 let parttern = r.parttern
                 if (r.parttern === 'phone') parttern = regexPhone
                 if (r.parttern === 'email') parttern = regexEmail
                 if (r.parttern === 'url') parttern = regexUrl
-                if (!parttern.test(form[i])) {
+
+                if (typeof parttern['test'] && !parttern?.test(form[i])) {
                     errorObject[i] = 'Gia tri khong dung dinh dang'
                 }
             }

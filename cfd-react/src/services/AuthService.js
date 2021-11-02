@@ -1,6 +1,11 @@
+import { apiServices } from "./callApi";
+import { api } from "./config";
 const authService = {
     login(user) {
-        return fetch('https://cfd-reactjs.herokuapp.com/elearning/v4/login', {method:'POST',body:JSON.stringify(user)});
+        return apiServices.callApi(`${api}/elearning/v4/login`,'POST',JSON.stringify(user))
+    },
+    update(form) {
+        return apiServices.callApiWithToken(`${api}/elearning/v4/profile/update`,'POST', form)
     }
 }
 export default authService

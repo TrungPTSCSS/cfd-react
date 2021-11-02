@@ -1,38 +1,32 @@
 import { Link } from "react-router-dom"
 export function Course({
-    status = 'Đã kết thúc',
-    tagName = 'FE',
-    name = 'FECB',
+    course_status = 'Đã kết thúc',
+    slug = 'FE',
+    title = 'FECB',
     like = 1,
     people = 500,
-    mentor = ''
+    teacher = {},
+    short_description='',
+    thumbnail = {}
 }) {
-    let badgeClass = status == "Đã kết thúc" ? 'b1' : status === "Đang diễn ra" ? 'b2' : 'b3'
+    let badgeClass = course_status === "sap-khai-gian" ? 'b3' : course_status === "dang-dien-ra" ? 'b2' : 'b1'
     return (
         <Link to={{
-            pathname: `/course-details/${tagName}`,
-            state: {
-                status: status,
-                tagName: tagName,
-                name: name,
-                like: like,
-                people: people,
-                mentor: mentor
-            },
+            pathname: `/course-details/${slug}`
         }} className="col-md-4 course">
             <div className="wrap">
                 <a className="cover" href="#">
-                    <img src="/img/img1.png" alt="" />
-                    <span className={`badge ${badgeClass}`}>{status}</span>
+                    <img src={thumbnail?.link} alt="" />
+                    <span className={`badge ${badgeClass}`}>{course_status === 'sap-khai-gian' ? 'Sắp khai giảng' : course_status === 'dang-dien-ra' ? 'Đang diễn ra' : 'Đã kết thúc' }</span>
                     {/* {status === "Đang diễn ra" && <span className="badge b2">{status}</span>} */}
                     {/* {status === "Sắp khai giảng" && <span className="badge b3">{status}</span>} */}
                     <div className="hover">
                         <div className="top">
                             <div className="user">
                                 <img src="/img/icon-user-white.svg" alt="" />
-                                {people}</div>
+                                {550}</div>
                             <div className="heart">
-                                <img src="/img/icon-heart.svg" alt="" />{like}
+                                <img src="/img/icon-heart.svg" alt="" />{500}
                             </div>
                         </div>
                         <div className="share">
@@ -42,29 +36,21 @@ export function Course({
                 </a>
                 <div className="info">
                     <a className="name" href="#">
-                        {name}
+                        {title}
                     </a>
                     <p className="des">
-                        One of the best corporate fashion brands in Sydney
+                        {short_description}
                     </p>
                 </div>
                 <div className="bottom">
                     <div className="teacher">
                         <div className="avatar">
-                            <img src="/img/avt.png" alt="" />
+                            <img src={teacher?.avatar?.link} alt="" />
                         </div>
-                        <div className="name">{mentor}</div>
+                        <div className="name">{teacher?.title}</div>
                     </div>
                     <Link to={{
-                        pathname: `/register/${tagName}`,
-                        state: {
-                            status: status,
-                            tagName: tagName,
-                            name: name,
-                            like: like,
-                            people: people,
-                            mentor: mentor
-                        },
+                        pathname: `/register/${slug}`
                     }} className="register-btn">Đăng Ký</Link>
                 </div>
             </div>

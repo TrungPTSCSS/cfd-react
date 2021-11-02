@@ -3,6 +3,9 @@
   font-weight: 700;
   position: absolute !important;
 }
+.dot{
+  display: none !important;
+}
 .nav ul li.active {
   background-color: unset;
 }
