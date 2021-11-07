@@ -1,6 +1,8 @@
 import { Course } from ".."
+import Loading from "../Loading"
 
 export function ListCourse({ sub, title, listCourse }) {
+    if (!listCourse) return <Loading/>
     return (
         <section className="section-3">
             <div className="container">

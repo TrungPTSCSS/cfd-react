@@ -1,75 +1,22 @@
 import { ListCourse } from "../../components";
-
+import { useEffect, useState } from "react";
+import courseService from "../../services/CourseService";
+import Loading from "../../components/Loading";
 export default function CoursePage() {
-    
-    var listOnline = [
-        {
-            tagName:'Front-end',
-            name: 'Front-end căn bản',
-            people: 100,
-            like: 100,
-            status: "Đã kết thúc",
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'React',
-            name: 'React JS',
-            people: 100,
-            like: 98,
-            status: "Đang diễn ra",
-            mentor: "Vương Đặng"
-        },
-        {
-            tagName:'Animation',
-            name: "Animation",
-            people: 100,
-            like: 500,
-            status: "Sắp khai giảng",
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'Reactjs',
-            name: 'React JS',
-            people: 100,
-            like: 98,
-            status: "Đang diễn ra",
-            mentor: "Vương Đặng"
-        },
-        {
-            tagName:'Animation1',
-            name: "Animation",
-            people: 100,
-            like: 500,
-            status: "Sắp khai giảng",
-            mentor: "Trần Nghĩa"
-        },
-    ]
-    var listOffline = [
-        {
-            tagName:'FE-can-ban',
-            name: 'Front-end căn bản',
-            people: 100,
-            like: 100,
-            status: "Đã kết thúc",
-            mentor: "Trần Nghĩa"
-        },
-        {
-            tagName:'FE-Reactjs',
-            name: 'React JS',
-            people: 100,
-            like: 98,
-            status: "Đang diễn ra",
-            mentor: "Vương Đặng"
-        },
-        {
-            tagName:'FE-animation',
-            name: "Animation",
-            people: 100,
-            like: 500,
-            status: "Sắp khai giảng",
-            mentor: "Trần Nghĩa"
-        },
-    ]
+    let [state, setState] = useState({
+        data: {},
+        loading: true,
+    })
+    useEffect(async () => {
+        let data = await courseService.getCourse();
+        console.log(data)
+        setState({
+            loading: false,
+            data
+        })
+    }, [])
+    let { loading, data } = state
+    if (loading) return <Loading />
     return (
         <main className="homepage" id="main">
             <section className="section-1">
@@ -80,8 +27,8 @@ export default function CoursePage() {
                         has
                         a more-or-less normal
                     </p>
-                    <ListCourse title="ONLINE" sub="KHÓA HỌC" listCourse={listOnline} />
-                    <ListCourse title="OFFLINE" sub="KHÓA HỌC" listCourse={listOffline} />
+                    <ListCourse title="ONLINE" sub="KHÓA HỌC" listCourse={data?.online} />
+                    <ListCourse title="OFFLINE" sub="KHÓA HỌC" listCourse={data?.offline} />
                 </div>
             </section>
         </main>

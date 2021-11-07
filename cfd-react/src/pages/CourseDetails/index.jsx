@@ -6,11 +6,14 @@ import courseService from "../../services/CourseService";
 export default function CourseDetails() {
     let [details, setDetails] = useState()
     let { tagname } = useParams();
+    let [courseRelated , setCourseRelated] = useState();
     useEffect(
         () => {
             async function fetchData() {
                 let response = await courseService.details(tagname);
-                setDetails(response.data);
+                let res = await courseService.getCourseRelated(tagname);
+                await setDetails(response.data);
+                await setCourseRelated(res.data);
             }
             fetchData();
         }, [tagname])
@@ -40,7 +43,7 @@ export default function CourseDetails() {
             teacher: "Trần Nghĩa"
         },
     ]
-    if (!details) return <Loading />
+    if (!details && !courseRelated) return <Loading />
     return (
         <main className="course-detail" id="main">
             <section className="banner style2" style={{ background: '#cde6fb' }}>
@@ -158,8 +161,8 @@ export default function CourseDetails() {
                     </div>
                 </div>
             </section>
-            <ListCourse title="THÀNH VIÊN" sub="DỰ ÁN" listCourse={list} />
-            <ListCourse title="LIÊN QUAN" sub="KHÓA HỌC" listCourse={list} />
+            <ListCourse title="THÀNH VIÊN" sub="DỰ ÁN" listCourse={courseRelated} />
+            <ListCourse title="LIÊN QUAN" sub="KHÓA HỌC" listCourse={courseRelated} />
         </main>
     )
 }

@@ -1,10 +1,19 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hook/useAuth";
+import store from "../../store";
+import { logoutAction, openLoginAction } from "../../store/action/authAction";
+import { LOGOUT, OPEN_LOGIN } from "../../store/type";
 export function Header() {
-    const { user, logout, togglePopupLogin } = useAuth()
+    // const { logout, togglePopupLogin } = useAuth()
     const showMenu = () => {
         document.querySelector('body').classList.toggle('menu-is-show');
     }
+    const {user, openLogin} = useAuth()
+
+    const dispatch = useDispatch();
+    
+
     return (
         <header id="header">
             <div className="wrap">
@@ -37,12 +46,12 @@ export function Header() {
                                 <div className="sub">
                                     <Link to="/profile/course">Khóa học của tôi</Link>
                                     <Link to="/profile">Thông tin tài khoản</Link>
-                                    <Link to="#" onClick={(ev) => { ev.preventDefault(); logout() }}>Đăng xuất</Link>
+                                    <Link to="#" onClick={(ev) => { ev.preventDefault(); dispatch(logoutAction()) }}>Đăng xuất</Link>
                                 </div>
                             </div>
                         ) : (
                             <div class="not-login bg-none">
-                                <Link to="#" class="btn-register" onClick={(ev) => { ev.preventDefault(); togglePopupLogin(true); }}>Đăng nhập</Link>
+                                <Link to="#" class="btn-register" onClick={(ev) => { ev.preventDefault(); dispatch(openLoginAction())}}>Đăng nhập</Link>
                                 <Link to="/register" class="btn main btn-open-login">Đăng ký</Link>
                             </div>
                         )

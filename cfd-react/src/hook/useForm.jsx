@@ -25,7 +25,7 @@ export function useForm(initValue = {}) {
                 if (r.parttern === 'email') parttern = regexEmail
                 if (r.parttern === 'url') parttern = regexUrl
 
-                if (typeof parttern['test'] && !parttern?.test(form[i])) {
+                if (typeof parttern['test'] !== 'undefined' && !parttern?.test(form[i])) {
                     errorObject[i] = 'Gia tri khong dung dinh dang'
                 }
             }
